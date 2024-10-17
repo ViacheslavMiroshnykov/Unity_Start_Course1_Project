@@ -31,25 +31,32 @@ public class TerminalControl : MonoBehaviour
 
     void OnUserInput(string input) 
     {
+        if (input == "меню")
+        {
+            ShowMainMenu("рад тебя видеть снова!");
+        }
+        else if (currentScreen == Screen.MainMenu)
+        {
+            RunMainMenu (input);
+        }
+    }
+    void RunMainMenu (string input)
+    {
         if (input == "007")
         {
             Terminal.WriteLine("Hello Mr Bond!");
-        }
-        else if (input == "меню")
-        {
-            ShowMainMenu("рад тебя видеть снова!");
         }
         else if (input == "1")
         {
             level = 1;
             GameStart();
         }
-         else if (input == "2")
+        else if (input == "2")
         {
             level = 2;
             GameStart();
         }      
-         else if (input == "3")
+        else if (input == "3")
         {
             level = 3;
             GameStart();
@@ -58,10 +65,11 @@ public class TerminalControl : MonoBehaviour
         {
             Terminal.WriteLine("Введите правильное значение");
         }
- void GameStart ()
- {
-    currentScreen = Screen.Password;
-    Terminal.WriteLine("Вы выбрали "+level+" уровень.");
- }
+    }
+    void GameStart ()
+    {
+        currentScreen = Screen.Password;
+        Terminal.WriteLine("Вы выбрали "+level+" уровень.");
     }
 }
+
