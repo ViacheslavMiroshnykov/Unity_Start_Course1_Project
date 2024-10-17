@@ -52,10 +52,6 @@ public class TerminalControl : MonoBehaviour
         if (input == "0")
         {
             Application.Quit();
-            #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-            #endif
-            return; 
         }
         if (input == "меню")
         {
