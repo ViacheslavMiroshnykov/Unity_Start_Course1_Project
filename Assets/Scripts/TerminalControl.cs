@@ -8,6 +8,10 @@ public class TerminalControl : MonoBehaviour
     enum Screen {MainMenu,Password,Win};
     Screen currentScreen = Screen.MainMenu;
     int level;
+    string password;
+    string[] Level1Passwords = {"ключ","кига","ручка","шкаф","блокнот"};
+    string[] Level2Passwords = {"огнемет","дубинка","тюрьма","наручники","прокурор"};
+    string[] Level3Passwords = {"марвел","комета","луна","астероид","спутник"};
 
     // Start is called before the first frame update
     void Start()
@@ -39,37 +43,63 @@ public class TerminalControl : MonoBehaviour
         {
             RunMainMenu (input);
         }
+        else if (currentScreen == Screen.Password)
+        {
+            CheckPassword (input);
+        }
     }
     void RunMainMenu (string input)
     {
-        if (input == "007")
+       bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
+
+        if(isValidLevelNumber)
+        {
+            level = int.Parse(input);
+            GameStart();
+        }
+        else if (input == "007")
         {
             Terminal.WriteLine("Hello Mr Bond!");
-        }
-        else if (input == "1")
-        {
-            level = 1;
-            GameStart();
-        }
-        else if (input == "2")
-        {
-            level = 2;
-            GameStart();
-        }      
-        else if (input == "3")
-        {
-            level = 3;
-            GameStart();
         }       
         else
         {
             Terminal.WriteLine("Введите правильное значение");
         }
     }
+
+    void CheckPassword (string input)
+    {
+        if (input == password)
+        {
+            Terminal.WriteLine ("Поздравляем, терминал взломан!");
+        }
+        else
+        {
+            Terminal.WriteLine ("Попробуйте еще раз...");
+        }
+    }
     void GameStart ()
     {
+        switch(level)
+        {
+            case 1:
+                password = Level1Passwords[2];
+                break;
+            case 2:
+                password = Level2Passwords[4];
+                break;
+            case 3:
+                password = Level3Passwords[0];
+                break;
+            default:
+                Debug.LogError("Такого уровня не существует!");
+                break;
+        }
+
         currentScreen = Screen.Password;
+        Terminal.ClearScreen();
         Terminal.WriteLine("Вы выбрали "+level+" уровень.");
+        Terminal.WriteLine ("Введите пароль.");
     }
 }
 
