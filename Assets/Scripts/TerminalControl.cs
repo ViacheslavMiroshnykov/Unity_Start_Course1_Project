@@ -24,6 +24,7 @@ public class TerminalControl : MonoBehaviour
 "Киберпанк","Террария","Халф-Лайф","Квейк","Старкрафт",
 "Варкрафт","Диабло","Фаркрай","Биошок","Валорант",
 "Дестини","Прей","Стрей","Инсайд","Хадес"};
+ 
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class TerminalControl : MonoBehaviour
         Terminal.WriteLine("Привет, "+PlayerName+"!");
         Terminal.WriteLine("Какую категорию хотите отгадывать?");
         Terminal.WriteLine(" ");
+        Terminal.WriteLine("Введите '0' - Закрыть игру");
         Terminal.WriteLine("Введите '1' - Категория фильмы");
         Terminal.WriteLine("Введите '2' - Категория мультфильмы");
         Terminal.WriteLine("Введите '3' - Категория игры");
@@ -47,6 +49,14 @@ public class TerminalControl : MonoBehaviour
 
     void OnUserInput(string input) 
     {
+        if (input == "0")
+        {
+            Application.Quit();
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #endif
+            return; 
+        }
         if (input == "меню")
         {
             ShowMainMenu("рад снова тебя видеть");
