@@ -46,6 +46,10 @@ public class TerminalControl : MonoBehaviour
         {
             RunMainMenu (input);
         }
+        else if (input == "ок")
+        {
+            GameStart ();
+        }
         else if (currentScreen == Screen.Password)
         {
             CheckPassword (input);
@@ -109,31 +113,19 @@ public class TerminalControl : MonoBehaviour
                 break;
         }
         Terminal.WriteLine(menuHint);
+        Terminal.WriteLine("Или введите 'ок' чтобы играть еще!");
     }
 
     void GameStart ()
     {
-        switch(level)
-        {
-            case 1:
-                password = Level1Passwords[UnityEngine.Random.Range(0, Level1Passwords.Length)];
-                break;
-            case 2:
-                password = Level2Passwords[UnityEngine.Random.Range(0, Level2Passwords.Length)];
-                break;
-            case 3:
-                password = Level3Passwords[UnityEngine.Random.Range(0, Level3Passwords.Length)];
-                break;
-            default:
-                Debug.LogError("Такого уровня не существует!");
-                break;
-        }
-
-        currentScreen = Screen.Password;
         Terminal.ClearScreen();
+        currentScreen = Screen.Password;
+        Terminal.WriteLine(menuHint);
+        
         switch(level)
         {
             case 1:
+                    password = Level1Passwords[UnityEngine.Random.Range(0, Level1Passwords.Length)];
                     Terminal.WriteLine("Приветствуем в категории Фильмы!");
                     Terminal.WriteLine("Какое название тут зашифровано?");
                     Terminal.WriteLine(" ");
@@ -141,6 +133,7 @@ public class TerminalControl : MonoBehaviour
                     Terminal.WriteLine(" ");
                 break;
             case 2:
+                    password = Level2Passwords[UnityEngine.Random.Range(0, Level2Passwords.Length)];
                     Terminal.WriteLine("Приветствуем в категории Мультфильмы!");
                     Terminal.WriteLine("Какое название тут зашифровано?");
                     Terminal.WriteLine(" ");
@@ -148,14 +141,17 @@ public class TerminalControl : MonoBehaviour
                     Terminal.WriteLine(" ");
                 break;
             case 3:
+                    password = Level3Passwords[UnityEngine.Random.Range(0, Level3Passwords.Length)];
                     Terminal.WriteLine("Приветствуем в категории игры!");
                     Terminal.WriteLine("Какое название тут зашифровано?");
                     Terminal.WriteLine(" ");
                     Terminal.WriteLine("Подсказка: "+password.Anagram());
                     Terminal.WriteLine(" ");
-            break;
+                break;
+            default:
+                Debug.LogError("Такого уровня не существует!");
+                break;
         }
-        Terminal.WriteLine(menuHint);
         Terminal.WriteLine ("Введите зашифрованное название:");
     }
 }
